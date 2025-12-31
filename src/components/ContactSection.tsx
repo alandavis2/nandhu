@@ -7,11 +7,35 @@ const ContactSection = () => {
     email: "",
     message: "",
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const mailtoLink = `mailto:nandhusuresh9493@gmail.com?subject=Portfolio Contact from ${formData.name}&body=${formData.message}%0A%0AFrom: ${formData.email}`;
-    window.location.href = mailtoLink;
+    setIsSubmitting(true);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/send-email", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert("Message sent successfully!");
+        setFormData({ name: "", email: "", message: "" });
+      } else {
+        alert(data.error || "Failed to send message. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error sending message:", error);
+      alert("Something went wrong. Please try again later.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -103,6 +127,7 @@ const ContactSection = () => {
                     className="w-full px-4 py-3 rounded-lg bg-secondary border border-border focus:border-primary focus:outline-none transition-colors"
                     placeholder="Your name"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -115,6 +140,7 @@ const ContactSection = () => {
                     className="w-full px-4 py-3 rounded-lg bg-secondary border border-border focus:border-primary focus:outline-none transition-colors"
                     placeholder="your@email.com"
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
 
@@ -127,15 +153,17 @@ const ContactSection = () => {
                     className="w-full px-4 py-3 rounded-lg bg-secondary border border-border focus:border-primary focus:outline-none transition-colors resize-none"
                     placeholder="Your message..."
                     required
+                    disabled={isSubmitting}
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full py-3 rounded-lg font-medium flex items-center justify-center gap-2 transition-all duration-300 hover:opacity-90"
+                  disabled={isSubmitting}
+                  className="w-full py-3 rounded-lg font-medium flex items-center justify-center gap-2 transition-all duration-300 hover:opacity-90 disabled:opacity-70 disabled:cursor-not-allowed"
                   style={{ background: "var(--gradient-primary)" }}
                 >
-                  <span className="text-primary-foreground">Send Message</span>
+                  <span className="text-primary-foreground">{isSubmitting ? "Sending..." : "Send Message"}</span>
                   <Send className="w-4 h-4 text-primary-foreground" />
                 </button>
               </form>
