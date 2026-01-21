@@ -14,7 +14,7 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:5000/api/send-email", {
+      const response = await fetch("http://localhost:5001/api/send-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -51,9 +51,12 @@ const ContactSection = () => {
           <div className="grid lg:grid-cols-2 gap-12">
             {/* Contact Info */}
             <div className="space-y-6">
-              <h3 className="text-xl font-semibold mb-6">Let's work together</h3>
+              <h3 className="text-xl font-semibold mb-6">
+                Let's work together
+              </h3>
               <p className="text-muted-foreground mb-8">
-                I'm always open to discussing new projects, creative ideas, or opportunities to be part of your vision. Feel free to reach out!
+                I'm always open to discussing new projects, creative ideas, or
+                opportunities to be part of your vision. Feel free to reach out!
               </p>
 
               <div className="space-y-4">
@@ -123,7 +126,9 @@ const ContactSection = () => {
                   <input
                     type="text"
                     value={formData.name}
-                    onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, name: e.target.value })
+                    }
                     className="w-full px-4 py-3 rounded-lg bg-secondary border border-border focus:border-primary focus:outline-none transition-colors"
                     placeholder="Your name"
                     required
@@ -132,11 +137,15 @@ const ContactSection = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Email</label>
+                  <label className="block text-sm font-medium mb-2">
+                    Email
+                  </label>
                   <input
                     type="email"
                     value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, email: e.target.value })
+                    }
                     className="w-full px-4 py-3 rounded-lg bg-secondary border border-border focus:border-primary focus:outline-none transition-colors"
                     placeholder="your@email.com"
                     required
@@ -145,10 +154,14 @@ const ContactSection = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium mb-2">Message</label>
+                  <label className="block text-sm font-medium mb-2">
+                    Message
+                  </label>
                   <textarea
                     value={formData.message}
-                    onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+                    onChange={(e) =>
+                      setFormData({ ...formData, message: e.target.value })
+                    }
                     rows={5}
                     className="w-full px-4 py-3 rounded-lg bg-secondary border border-border focus:border-primary focus:outline-none transition-colors resize-none"
                     placeholder="Your message..."
@@ -163,7 +176,9 @@ const ContactSection = () => {
                   className="w-full py-3 rounded-lg font-medium flex items-center justify-center gap-2 transition-all duration-300 hover:opacity-90 disabled:opacity-70 disabled:cursor-not-allowed"
                   style={{ background: "var(--gradient-primary)" }}
                 >
-                  <span className="text-primary-foreground">{isSubmitting ? "Sending..." : "Send Message"}</span>
+                  <span className="text-primary-foreground">
+                    {isSubmitting ? "Sending..." : "Send Message"}
+                  </span>
                   <Send className="w-4 h-4 text-primary-foreground" />
                 </button>
               </form>
