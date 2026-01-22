@@ -14,7 +14,7 @@ const ContactSection = () => {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch("http://localhost:5001/api/send-email", {
+      const response = await fetch("https://nandhu-16sy.onrender.com/api/send-email", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
